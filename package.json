@@ -1,0 +1,17 @@
+{
+  "name": "events-ts",
+  "version": "0.4.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "mateus c. schwarz <mateus.cortiano@gmail.com> (http://mateus.cortiano.info/)",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^27.5.1",
+    "jest": "^28.1.0",
+    "ts-jest": "^28.0.2",
+    "tsc": "^2.0.4"
+  }
+}
