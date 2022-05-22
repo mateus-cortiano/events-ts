@@ -9,16 +9,16 @@ interface ListenerFlags {
 }
 
 interface Listener<T> {
-  callback: T
+  call: T
   flags: ListenerFlags
 }
 
-export interface BaseEvents {
+export interface DefaultEvents {
   connect: (username: string) => void
   disconnect: (reason: string) => void
 }
 
-export class EventSystem<Events extends EventMap<Events> = BaseEvents> {
+export class EventSystem<Events extends EventMap<Events> = DefaultEvents> {
   private subscribers: Map<keyof Events, Listener<Events[keyof Events]>[]>
 
   constructor() {
@@ -35,13 +35,13 @@ export class EventSystem<Events extends EventMap<Events> = BaseEvents> {
   }
 
   on<Ev extends keyof Events>(event: Ev, callback: Events[Ev]) {
-    let listener = { callback: callback, flags: {} }
+    let listener = { call: callback, flags: {} }
     this.setdefault(event).push(listener)
     return () => this.remove(event, listener)
   }
 
   once<Ev extends keyof Events>(event: Ev, callback: Events[Ev]) {
-    let listener = { callback: callback, flags: { once: true } }
+    let listener = { call: callback, flags: { once: true } }
     this.setdefault(event).push(listener)
     return () => this.remove(event, listener)
   }
@@ -54,7 +54,7 @@ export class EventSystem<Events extends EventMap<Events> = BaseEvents> {
     let once_subs: Listener<Events[keyof Events]>[] = []
 
     for (let sub of subs) {
-      sub.callback(...(data as Events[Ev][]))
+      sub.call(...(data as Events[Ev][]))
       if (sub.flags.once) once_subs.push(sub)
     }
 
