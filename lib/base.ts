@@ -1,7 +1,7 @@
 /* base.ts */
 
 export type EventMap<Events> = {
-  [Prop in keyof Events]: Events[Prop]
+  [Event in keyof Events]: Events[Event]
 }
 
 export interface ListenerFlags {
@@ -37,21 +37,21 @@ export class BaseEventsSystem<Events extends EventMap<Events>> {
     return this.subscribers.get(event) as IListener<Events[keyof Events]>[]
   }
 
-  on<Ev extends keyof Events>(event: Ev, callback: Events[Ev]) {
+  on<Event extends keyof Events>(event: Event, callback: Events[Event]) {
     const listener = default_listener(callback)
     this.setdefault(event).push(listener)
     return () => this.remove(event, listener)
   }
 
-  once<Ev extends keyof Events>(event: Ev, callback: Events[Ev]) {
+  once<Event extends keyof Events>(event: Event, callback: Events[Event]) {
     const listener = once_listener(callback)
     this.setdefault(event).push(listener)
     return () => this.remove(event, listener)
   }
 
-  protected remove<Ev extends keyof Events>(
-    event: Ev,
-    listener: IListener<Events[Ev]>
+  protected remove<Event extends keyof Events>(
+    event: Event,
+    listener: IListener<Events[Event]>
   ) {
     let subs = this.subscribers.get(event)
     if (subs === undefined) return
