@@ -2,7 +2,7 @@
   "name": "events-ts",
   "version": "0.4.2",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "jest"
   },
