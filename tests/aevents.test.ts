@@ -15,10 +15,10 @@ function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms).unref())
 }
 
-function create_fuzzed_async_fn(fn: (...args: any) => any) {
-  return async function (...args: Parameters<typeof fn>) {
+function create_fuzzed_async_fn<T extends (...args: any) => any>(fn: T) {
+  return async function (...args: Parameters<T>): Promise<ReturnType<T>> {
     await sleep(MIN_DELAY + Math.random() * VAR_DELAY)
-    fn(...args)
+    return fn(...(args as any))
   }
 }
 
