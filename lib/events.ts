@@ -1,6 +1,6 @@
 /* eventsystem.ts */
 
-import { BaseEventsSystem, EventMap, Listener } from './base'
+import { BaseEventsSystem, EventMap, IListener } from './base'
 
 // ---
 
@@ -17,7 +17,7 @@ export class EventSystem<
 
     if (subs === undefined) return
 
-    let once_subs: Listener<Events[keyof Events]>[] = []
+    let once_subs: IListener<Events[keyof Events]>[] = []
 
     for (let sub of subs) {
       if (sub.flags.once) once_subs.push(sub)
