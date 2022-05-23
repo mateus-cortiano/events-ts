@@ -21,7 +21,7 @@ export class EventSystem<
 
     for (let sub of subs) {
       if (sub.flags.once) once_subs.push(sub)
-      sub.call(...(data as Events[Ev][]))
+      sub.call(...(data as Parameters<Events[Ev]>[]))
     }
 
     for (let sub of once_subs) this.remove(event, sub)
