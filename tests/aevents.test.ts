@@ -1,6 +1,6 @@
 /* aevents.test.ts */
 
-import { AsyncEventSystem } from '../lib/aevents'
+import { AsyncEventSystem } from '../lib/index'
 
 interface TestEvents {
   test1: (data: [number]) => Promise<any>
