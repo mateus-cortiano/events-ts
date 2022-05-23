@@ -20,7 +20,7 @@ export class AsyncEventSystem<
 
     if (subs === undefined) return
 
-    let promises: Promise<void>[] = []
+    let promises: Promise<any>[] = []
     let once_subs = []
 
     for (let sub of subs) {
