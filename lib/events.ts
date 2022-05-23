@@ -20,8 +20,8 @@ export class EventSystem<
     let once_subs: Listener<Events[keyof Events]>[] = []
 
     for (let sub of subs) {
-      sub.call(...(data as Events[Ev][]))
       if (sub.flags.once) once_subs.push(sub)
+      sub.call(...(data as Events[Ev][]))
     }
 
     for (let sub of once_subs) this.remove(event, sub)
