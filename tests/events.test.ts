@@ -1,6 +1,6 @@
 /* main.test.ts */
 
-import { EventSystem } from '../lib/events'
+import { EventSystem } from '../lib/index'
 
 // ---
 
