@@ -12,7 +12,10 @@ export interface DefaultAsyncEvents {
 export class AsyncEventSystem<
   Events extends EventMap<Events> = DefaultAsyncEvents
 > extends BaseEventsSystem<Events> {
-  emit<Ev extends keyof Events>(event: Ev, ...data: Parameters<Events[Ev]>) {
+  emit<Event extends keyof Events>(
+    event: Event,
+    ...data: Parameters<Events[Event]>
+  ) {
     let subs = this.subscribers.get(event)
 
     if (subs === undefined) return
@@ -21,7 +24,7 @@ export class AsyncEventSystem<
     let once_subs: IListener<Events[keyof Events]>[] = []
 
     for (let sub of subs) {
-      let promise = sub.call(...(data as Parameters<Events[Ev]>[]))
+      let promise = sub.call(...(data as Parameters<Events[Event]>[]))
       if (sub.flags.once) once_subs.push(sub)
       promises.push(promise)
     }

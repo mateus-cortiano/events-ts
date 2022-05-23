@@ -12,7 +12,10 @@ export interface DefaultEvents {
 export class EventSystem<
   Events extends EventMap<Events> = DefaultEvents
 > extends BaseEventsSystem<Events> {
-  emit<Ev extends keyof Events>(event: Ev, ...data: Parameters<Events[Ev]>) {
+  emit<Event extends keyof Events>(
+    event: Event,
+    ...data: Parameters<Events[Event]>
+  ) {
     let subs = this.subscribers.get(event)
 
     if (subs === undefined) return
@@ -21,7 +24,7 @@ export class EventSystem<
 
     for (let sub of subs) {
       if (sub.flags.once) once_subs.push(sub)
-      sub.call(...(data as Parameters<Events[Ev]>[]))
+      sub.call(...(data as Parameters<Events[Event]>[]))
     }
 
     for (let sub of once_subs) this.remove(event, sub)
