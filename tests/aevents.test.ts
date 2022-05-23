@@ -183,6 +183,7 @@ describe('async events system test', () => {
 
     expect(mock_data1[0]).toBe(26)
     expect(mock_data2[0]).toBe(10)
+
     // ---
 
     rm_listener2() // removes [02] from 'test1'
