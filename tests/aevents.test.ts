@@ -105,35 +105,40 @@ describe('async events system test', () => {
     let mock_data2: [number] = [0]
     let events = new AsyncEventSystem<TestEvents>()
 
-    /* 01 */ let rm_listener1 = events.on(
+    // 01
+    let rm_listener1 = events.on(
       'test1',
       create_fuzzed_async_fn((data: [number]) => {
         data[0] += 1
       })
     )
 
-    /* 02 */ let rm_listener2 = events.on(
+    // 02
+    let rm_listener2 = events.on(
       'test1',
       create_fuzzed_async_fn((data: [number]) => {
         data[0] += 2
       })
     )
 
-    /* 03 */ let rm_listener3 = events.on(
+    // 03
+    let rm_listener3 = events.on(
       'test1',
       create_fuzzed_async_fn((data: [number]) => {
         data[0] += 3
       })
     )
 
-    /* 04 */ let rm_listener4 = events.on(
+    // 04
+    let rm_listener4 = events.on(
       'test2',
       create_fuzzed_async_fn((data: [number]) => {
         data[0] += 4
       })
     )
 
-    /* 05 */ let rm_listener5 = events.on(
+    // 05
+    let rm_listener5 = events.on(
       'test2',
       create_fuzzed_async_fn((data: [number], data2: [number]) => {
         data[0] += 5
@@ -141,13 +146,16 @@ describe('async events system test', () => {
       })
     )
 
-    /* 06 */ events.once(
+    // 06
+    events.once(
       'test1',
       create_fuzzed_async_fn((data: [number]) => {
         data[0] += 1
       })
     )
-    /* 07 */ events.once(
+
+    // 07
+    events.once(
       'test2',
       create_fuzzed_async_fn((data: [number], data2: [number]) => {
         data[0] += 5
@@ -175,8 +183,8 @@ describe('async events system test', () => {
 
     rm_listener2() // removes [02] from 'test1'
 
-    // adds a once listener
-    /* 08 */ events.once(
+    // 08
+    events.once(
       'test1',
       create_fuzzed_async_fn(data => (data[0] += 4))
     )
