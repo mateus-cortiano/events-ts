@@ -1,4 +1,4 @@
-/* eventsystem.ts */
+/* events.ts */
 
 import { BaseEventsSystem, EventMap } from './base'
 
