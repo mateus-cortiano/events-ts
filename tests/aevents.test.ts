@@ -34,17 +34,21 @@ describe('async events system test', () => {
     let events = new AsyncEventSystem<TestEvents>()
     let events2 = new AsyncEventSystem<TestEvents>()
 
-    /* 01 */ let rm_listener1 = events.on('test1', async data => (data[0] += 1))
-    /* 02 */ let rm_listener2 = events.on('test1', async data => (data[0] += 2))
-    /* 03 */ let rm_listener3 = events.on('test1', async data => (data[0] += 3))
-    /* 04 */ let rm_listener4 = events.on('test2', async data => (data[0] += 4))
-    /* 05 */ let rm_listener5 = events.on('test2', async (data, data2) => {
+    let rm_listener1 = events.on('test1', async data => (data[0] += 1)) // 01
+    let rm_listener2 = events.on('test1', async data => (data[0] += 2)) // 02
+    let rm_listener3 = events.on('test1', async data => (data[0] += 3)) // 03
+    let rm_listener4 = events.on('test2', async data => (data[0] += 4)) // 04
+
+    // 05
+    let rm_listener5 = events.on('test2', async (data, data2) => {
       data[0] += 5
       data2[0] += 5
     })
 
-    /* 06 */ events.once('test1', async data => (data[0] += 1))
-    /* 07 */ events.once('test2', async (data, data2) => {
+    events.once('test1', async data => (data[0] += 1)) // 06
+
+    // 07
+    events.once('test2', async (data, data2) => {
       data[0] += 5
       data2[0] += 5
     })
@@ -69,7 +73,7 @@ describe('async events system test', () => {
     // ---
 
     rm_listener2() // removes [02] from 'test1'
-    /* 08 */ events.once('test1', async data => (data[0] += 4)) // adds a once listener
+    events.once('test1', async data => (data[0] += 4)) // 08
 
     events2.emit('test1', mock_data1) // should reach no listener
     events.emit('test1', mock_data1) // should reach [03, 08] and drop [08]
