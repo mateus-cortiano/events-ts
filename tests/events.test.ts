@@ -14,6 +14,7 @@ describe('events system test', () => {
     let mock_data1: [number] = [0]
     let mock_data2: [number] = [0]
     let events = new EventSystem<TestEvents>()
+    let events2 = new EventSystem<TestEvents>()
 
     /* 01 */ let rm_listener1 = events.on('test1', data => (data[0] += 1))
     /* 02 */ let rm_listener2 = events.on('test1', data => (data[0] += 2))
@@ -52,6 +53,7 @@ describe('events system test', () => {
     rm_listener2() // removes [02] from 'test1'
     /* 08 */ events.once('test1', data => (data[0] += 4)) // adds a once listener
 
+    events2.emit('test1', mock_data1) // should reach no listener
     events.emit('test1', mock_data1) // should reach [03, 08] and drop [08]
     events.emit('test2', mock_data1, mock_data2) // should reach [04, 05]
 
