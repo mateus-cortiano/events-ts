@@ -21,7 +21,7 @@ export class AsyncEventSystem<
     let once_subs: Listener<Events[keyof Events]>[] = []
 
     for (let sub of subs) {
-      let promise = sub.call(...(data as Events[Ev][]))
+      let promise = sub.call(...(data as Parameters<Events[Ev]>[]))
       if (sub.flags.once) once_subs.push(sub)
       promises.push(promise)
     }
