@@ -1,5 +1,7 @@
 /* base.ts */
 
+type Callable = (...any: any) => any
+
 export type EventMap<Events> = {
   [Event in keyof Events]: Events[Event]
 }
@@ -8,25 +10,25 @@ export interface ListenerFlags {
   once?: boolean
 }
 
-export interface IListener<T> {
+export interface Listener_I<T extends Callable> {
   call: T
   flags: ListenerFlags
 }
 
-class Listener<T> implements IListener<T> {
+class Listener<T extends Callable> implements Listener_I<T> {
   constructor(public call: T, public flags: ListenerFlags = {}) {}
 }
 
-function default_listener<T>(call: T) {
+function default_listener<T extends Callable>(call: T) {
   return new Listener(call)
 }
 
-function once_listener<T>(call: T) {
+function once_listener<T extends Callable>(call: T) {
   return new Listener(call, { once: true })
 }
 
 export class BaseEventsSystem<Events extends EventMap<Events>> {
-  protected subscribers: Map<keyof Events, IListener<Events[keyof Events]>[]>
+  protected subscribers: Map<keyof Events, Listener_I<Events[keyof Events]>[]>
 
   constructor() {
     this.subscribers = new Map()
@@ -34,7 +36,7 @@ export class BaseEventsSystem<Events extends EventMap<Events>> {
 
   protected setdefault(event: keyof Events) {
     if (!this.subscribers.has(event)) this.subscribers.set(event, [])
-    return this.subscribers.get(event) as IListener<Events[keyof Events]>[]
+    return this.subscribers.get(event) as Listener_I<Events[keyof Events]>[]
   }
 
   on<Event extends keyof Events>(event: Event, callback: Events[Event]) {
@@ -51,7 +53,7 @@ export class BaseEventsSystem<Events extends EventMap<Events>> {
 
   protected remove<Event extends keyof Events>(
     event: Event,
-    listener: IListener<Events[Event]>
+    listener: Listener_I<Events[Event]>
   ) {
     let subs = this.subscribers.get(event)
     if (subs === undefined) return
