@@ -1,6 +1,6 @@
 /* aevents.ts */
 
-import { BaseEventsSystem, EventMap, IListener } from './base'
+import { BaseEventsSystem, EventMap } from './base'
 
 // ---
 
@@ -21,7 +21,7 @@ export class AsyncEventSystem<
     if (subs === undefined) return
 
     let promises: Promise<void>[] = []
-    let once_subs: IListener<Events[keyof Events]>[] = []
+    let once_subs = []
 
     for (let sub of subs) {
       let promise = sub.call(...(data as Parameters<Events[Event]>[]))
