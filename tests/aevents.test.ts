@@ -100,7 +100,7 @@ describe('async events system test', () => {
     expect(mock_data2[0]).toBe(20)
   })
 
-  test('should emit correctly to on and once async listeners with various amounts of delays', async () => {
+  test('should emit asynchronously to on and once async listeners with various amounts of delays', async () => {
     let mock_data1: [number] = [0]
     let mock_data2: [number] = [0]
     let events = new AsyncEventSystem<TestEvents>()
